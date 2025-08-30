@@ -21,6 +21,23 @@ fn delay(duration: Duration) {
     while start.elapsed() < duration {}
 }
 
+// Some convenience for switching LEDs without having to remember the actual hardware behind this
+// task. There is the crate switch-hal for that, but it does not support embedded-hal 1.0 yet.
+pub trait LowActiveSwitch {
+    fn switch_on(&mut self);
+    fn switch_off(&mut self);
+}
+
+impl<'d> LowActiveSwitch for Output<'d> {
+    fn switch_on(&mut self) {
+        self.set_low();
+    }
+
+    fn switch_off(&mut self) {
+        self.set_high();
+    }
+}
+
 #[main]
 fn main() -> ! {
     esp_println::logger::init_logger_from_env();
@@ -42,12 +59,12 @@ fn main() -> ! {
 
     loop {
         log::info!("D1");
-        d1.set_low();
-        d2.set_high();
+        d1.switch_on();
+        d2.switch_off();
         delay(t1);
         log::info!("D2");
-        d2.set_low();
-        d1.set_high();
+        d2.switch_on();
+        d1.switch_off();
         delay(t1);
     }
 }
