@@ -11,6 +11,7 @@ use esp_hal::clock::CpuClock;
 use esp_hal::gpio::{DriveMode, Level, Output, OutputConfig, Pull};
 use esp_hal::main;
 use esp_hal::time::{Duration, Instant};
+use hakkaa::switch::LowActiveSwitch;
 
 // This creates a default app-descriptor required by the esp-idf bootloader.
 // For more information see: <https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-reference/system/app_image_format.html#application-description>
@@ -19,23 +20,6 @@ esp_bootloader_esp_idf::esp_app_desc!();
 fn delay(duration: Duration) {
     let start = Instant::now();
     while start.elapsed() < duration {}
-}
-
-// Some convenience for switching LEDs without having to remember the actual hardware behind this
-// task. There is the crate switch-hal for that, but it does not support embedded-hal 1.0 yet.
-pub trait LowActiveSwitch {
-    fn switch_on(&mut self);
-    fn switch_off(&mut self);
-}
-
-impl<'d> LowActiveSwitch for Output<'d> {
-    fn switch_on(&mut self) {
-        self.set_low();
-    }
-
-    fn switch_off(&mut self) {
-        self.set_high();
-    }
 }
 
 #[main]
@@ -50,8 +34,8 @@ fn main() -> ! {
     let led_pin_config = OutputConfig::default()
         .with_drive_mode(DriveMode::OpenDrain)
         .with_pull(Pull::None);
-    let mut d1 = Output::new(peripherals.GPIO3, Level::High, led_pin_config);
-    let mut d2 = Output::new(peripherals.GPIO4, Level::High, led_pin_config);
+    let mut d1 = LowActiveSwitch::new(Output::new(peripherals.GPIO3, Level::High, led_pin_config));
+    let mut d2 = LowActiveSwitch::new(Output::new(peripherals.GPIO4, Level::High, led_pin_config));
 
     let t1 = Duration::from_millis(500);
 
