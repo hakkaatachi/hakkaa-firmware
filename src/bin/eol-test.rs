@@ -12,11 +12,10 @@ use embassy_sync::blocking_mutex::raw::CriticalSectionRawMutex;
 use embassy_sync::signal::Signal;
 use embassy_time::{Duration, Timer};
 use esp_backtrace as _;
-use esp_hal::clock::CpuClock;
-use esp_hal::gpio::{DriveMode, Input, InputConfig, Level, Output, OutputConfig, Pull};
-use esp_hal::timer::systimer::SystemTimer;
 
-use hakkaa::board::Storeys;
+use esp_hal::gpio::Input;
+use hakkaa::board::Board;
+use hakkaa::led::Storeys;
 use hakkaa::switch::LowActiveSwitch;
 
 extern crate alloc;
@@ -100,52 +99,19 @@ static U2_SIGNAL: ButtonSignal = ButtonSignal::new();
 
 #[esp_hal_embassy::main]
 async fn main(spawner: Spawner) -> ! {
-    esp_println::logger::init_logger_from_env();
+    let board = Board::init();
 
-    let config = esp_hal::Config::default().with_cpu_clock(CpuClock::max());
-    let peripherals = esp_hal::init(config);
-
-    esp_alloc::heap_allocator!(size: 64 * 1024);
-
-    let timer = SystemTimer::new(peripherals.SYSTIMER);
-    esp_hal_embassy::init(timer.alarm0);
-
-    // Current flows from the power source (+) directly through the LED, a current limiting
-    // resistor, and finally into a GPIO pin with its low-side switching transistor to GND (-).
-    //
-    // We are using the GPIOs as a low-side switch to the LEDs: no push/pull output, only the
-    // low-side transistor of theo output stage as low-side switching transistor for the LED.
-    let led_pin_config = OutputConfig::default()
-        .with_drive_mode(DriveMode::OpenDrain)
-        .with_pull(Pull::None);
-
-    let storey_leds = [
-        LowActiveSwitch::new(Output::new(peripherals.GPIO3, Level::High, led_pin_config)),
-        LowActiveSwitch::new(Output::new(peripherals.GPIO4, Level::High, led_pin_config)),
-        LowActiveSwitch::new(Output::new(peripherals.GPIO21, Level::High, led_pin_config)),
-        LowActiveSwitch::new(Output::new(peripherals.GPIO20, Level::High, led_pin_config)),
-        LowActiveSwitch::new(Output::new(peripherals.GPIO10, Level::High, led_pin_config)),
-        LowActiveSwitch::new(Output::new(peripherals.GPIO7, Level::High, led_pin_config)),
-        LowActiveSwitch::new(Output::new(peripherals.GPIO6, Level::High, led_pin_config)),
-        LowActiveSwitch::new(Output::new(peripherals.GPIO5, Level::High, led_pin_config)),
-    ];
-    let storeys = Storeys::new(storey_leds);
-
-    let esp_led = LowActiveSwitch::new(Output::new(peripherals.GPIO8, Level::High, led_pin_config));
-
-    let switch_pin_config = InputConfig::default().with_pull(Pull::Up);
-    let sw1 = Input::new(peripherals.GPIO1, switch_pin_config);
-    let u2 = Input::new(peripherals.GPIO0, switch_pin_config);
+    let storeys = Storeys::new(board.storey_leds);
 
     log::info!("Starting EOL test.");
     // Spawn a debouncing and counting task for each "button". Each triplet of "presses" will
     // generate as signal which is later checked by the EOL task.
-    spawner.spawn(button_task(sw1, &SW1_SIGNAL)).unwrap();
-    spawner.spawn(button_task(u2, &U2_SIGNAL)).unwrap();
+    spawner.spawn(button_task(board.sw1, &SW1_SIGNAL)).unwrap();
+    spawner.spawn(button_task(board.u2, &U2_SIGNAL)).unwrap();
     // Finally spawn the EOL task showing different storey LED patterns for user inspection of LEDs
     // and as a prompt for pressing SW1 or shaking the board for checking the shake sensor U2.
     spawner
-        .spawn(eol_task(storeys, &SW1_SIGNAL, &U2_SIGNAL, esp_led))
+        .spawn(eol_task(storeys, &SW1_SIGNAL, &U2_SIGNAL, board.esp_led))
         .unwrap();
 
     // Keep the main task running forever.
