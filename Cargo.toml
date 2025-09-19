@@ -26,6 +26,8 @@ esp-hal-embassy = { version = "0.8.1", features = ["esp32c3", "log-04"] }
 esp-println = { version = "0.14.0", features = ["esp32c3", "log-04"] }
 embassy-futures = "0.1.2"
 embassy-sync = "0.7.2"
+heapless = "0.8.0"
+adjacent-pair-iterator = "1.0.0"
 
 
 [profile.dev]
