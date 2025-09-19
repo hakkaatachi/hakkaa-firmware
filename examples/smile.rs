@@ -19,7 +19,7 @@ esp_bootloader_esp_idf::esp_app_desc!();
 // A symmetrical smile pattern. Every entry represents a row. Squint your eyes and have a look from
 // the right side: :)
 #[rustfmt::skip]
-static HEART_PATTERN: [u8; 26] = [
+static SMILE_PATTERN: [u8; 26] = [
     0b00000000,
     0b00000000,
     0b00000000,
@@ -67,7 +67,7 @@ async fn main(_spawner: Spawner) -> ! {
     // Display the pattern one row after another. We are dealing with a symmetrical pattern and
     // don't have to pay attention to the direction of movement.
     loop {
-        for pattern in HEART_PATTERN.iter() {
+        for pattern in SMILE_PATTERN.iter() {
             storeys.set_pattern(*pattern);
             delay(row_delay).await;
         }
