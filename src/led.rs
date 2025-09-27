@@ -24,13 +24,13 @@ impl<'a> Storeys<'a> {
 
     /// Switches all storey LEDs off.
     pub fn all_off(&mut self) {
-        log::info!("Dn off");
+        log::debug!("Dn off");
         self.leds.iter_mut().for_each(|led| led.switch_off());
     }
 
     /// Switches all storey LEDs on.
     pub fn all_on(&mut self) {
-        log::info!("Dn on");
+        log::debug!("Dn on");
         self.leds.iter_mut().for_each(|led| led.switch_on());
     }
 
@@ -62,7 +62,7 @@ impl<'a> Storeys<'a> {
 
         loop {
             for n in 0..self.leds.len() {
-                log::info!("cycle D{}", n + 1);
+                log::debug!("cycle D{}", n + 1);
 
                 let previous = (n + self.leds.len() - 1) % self.leds.len();
                 self.leds[previous].switch_off();

@@ -20,9 +20,10 @@
 
 # Test von Setup und Hardware
 
-```
-$ cargo run --bin eol-test
-```
+* Hardware-Test ausführen, Informationen und Anweisungen gibt es über die Log-Ausgaben
+    ```
+    $ cargo run --bin eol-test
+    ```
 
 # Eigene Firmware fürs Target
 

@@ -34,15 +34,15 @@ async fn delay(duration: Duration) {
 /// Waits for a single press of `button` with input debouncing.
 async fn wait_for_button<'a>(button: &mut Input<'a>) {
     let debounce_delay = Duration::from_millis(100);
-    log::info!("waiting for switch");
+    log::debug!("waiting for switch");
 
-    log::info!("waiting for high");
+    log::debug!("waiting for high");
     button.wait_for_high().await;
     delay(debounce_delay).await;
-    log::info!("waiting for low");
+    log::debug!("waiting for low");
     button.wait_for_low().await;
     delay(debounce_delay).await;
-    log::info!("waiting for high again");
+    log::debug!("waiting for high again");
     button.wait_for_high().await;
 }
 
@@ -74,24 +74,31 @@ async fn eol_task(
 
     // Cycle LEDs while waiting for button presses. This should be the most distinguishable action
     // giving the user all the time need for checking the storey LEDs.
-    log::info!("start cycling");
+    log::info!(
+        "Cycling LEDs. Check that each LED lights up. If they do, press button SW1 three times."
+    );
     first_button.reset();
     match select(storeys.cycle(step), first_button.wait()).await {
-        Either::First(_) => log::info!("cycle done"),
-        Either::Second(_) => log::info!("cycle timeout"),
+        Either::First(_) => log::debug!("cycle done"),
+        Either::Second(_) => log::debug!("cycle timeout"),
     }
 
     // Blink all LEDs while waiting for input from the shake sensor.
-    log::info!("start blinking");
+    log::info!(
+        "Blinking all LEDs. Shake the PCB three times back and forth along the shake sensor axis."
+    );
     second_button.reset();
     match select(storeys.blink(step), second_button.wait()).await {
-        Either::First(_) => log::info!("blink done"),
-        Either::Second(_) => log::info!("blink timeout"),
+        Either::First(_) => log::debug!("blink done"),
+        Either::Second(_) => log::debug!("blink timeout"),
     }
 
     // Done. Light up all storey LEDs and additionally the blue LED on the ESP board.
     storeys.all_on();
     finished_led.switch_on();
+
+    log::info!("Congratulations! EOL test passed. You may start writing firmware now.");
+    log::info!("Press Ctrl + C to exit.");
 }
 
 static SW1_SIGNAL: ButtonSignal = ButtonSignal::new();
@@ -103,7 +110,7 @@ async fn main(spawner: Spawner) -> ! {
 
     let storeys = Storeys::new(board.storey_leds);
 
-    log::info!("Starting EOL test.");
+    log::info!("Starting end-of-line (EOL) test.");
     // Spawn a debouncing and counting task for each "button". Each triplet of "presses" will
     // generate as signal which is later checked by the EOL task.
     spawner.spawn(button_task(board.sw1, &SW1_SIGNAL)).unwrap();
