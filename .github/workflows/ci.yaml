@@ -11,14 +11,28 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
+      with:
+          toolchain: stable
+          components: clippy, rustfmt
     - name: Build
       run: cargo build
     - name: Clippy
       run: cargo clippy
+    - name: Formatting
+      run: cargo fmt -- --check
     - name: Docs
       run: cargo doc
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          fail: true
