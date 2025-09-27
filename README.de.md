@@ -1,3 +1,7 @@
+[![en](https://img.shields.io/badge/lang-en-blue.svg)](README.md)
+
+# ハッカー (Hakkā) - Eine Einführung in SMD-Löten und Mikrokontroller-Programmierung
+
 ## Toolchain
 1. [Rustup.rs](https://rustup.rs/)
 2. [The Rust on ESP Book
@@ -37,3 +41,17 @@ Board beobachten
    ```
    $ cargo run --bin pov
    ```
+
+# Lizenz
+
+Dieses Werk ist unter einer der folgenden Lizenzen nutzbar:
+
+* Apache-Lizenz, Version 2.0 (LICENSE-APACHE or
+  http://www.apache.org/licenses/LICENSE-2.0)
+* MIT-Lizenz (LICENSE-MIT or http://opensource.org/licenses/MIT)
+
+# Beiträge
+
+Wenn nicht explizit anderweitig andgegeben, werden alle Beiträge zu diesem Werk
+im Sinne der Apache-Lizenz als wie oben dual lizenziert und ohne zusätzliche
+Bedingugngen entgegengenommen.
