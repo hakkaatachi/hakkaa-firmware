@@ -3,6 +3,9 @@
 
 # ハッカー (Hakkā) - An Introduction to SMT Soldering and Microcontroller Programming
 
+![board front](doc/board-front.png)
+![board back](doc/board-back.png)
+
 English README comming soon. See [README.de.md](README.de.md) in the meantime.
 
 # License

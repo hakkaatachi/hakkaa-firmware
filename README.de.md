@@ -2,6 +2,11 @@
 
 # ハッカー (Hakkā) - Eine Einführung in SMD-Löten und Mikrokontroller-Programmierung
 
+![board front](doc/board-front.png)
+![board back](doc/board-back.png)
+
+# Setup
+
 ## Toolchain
 1. [Rustup.rs](https://rustup.rs/)
 2. [The Rust on ESP Book
@@ -13,22 +18,13 @@
     ```
     `--locked` installiert genau die im Projekt hinterlegten Versionen der Abhängigkeiten
 
-## Firmware bauen
-
-1. Im Firware Ordner ausführen
-    ```
-    $ cargo build
-    ```
-  
-## Hardware-Test auf dem Target ausführen
+# Test von Setup und Hardware
 
 ```
 $ cargo run --bin eol-test
 ```
 
-Board beobachten 
-
-## Eigene Firmware fürs Target
+# Eigene Firmware fürs Target
 
 * Dokumentation für Hakkaa-Board-Support und benutzte Module erstellen und im Browser anzeigen lassen
     ```
