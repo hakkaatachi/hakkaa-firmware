@@ -1,0 +1,70 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1758749657,
+        "narHash": "sha256-ZgZL/5PSAXyiC/73JJ0OM8Sr9JLXnBtvRAk1SoLqoPo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b07fc6f3710b4a04856ade7e2ea9089537ab1f24",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "qemu-espressif": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1759879671,
+        "narHash": "sha256-IjaoYy7CDVTiFxhGbg5hqvgvxivrz/HnidqI21aUlBo=",
+        "owner": "SFrijters",
+        "repo": "nix-qemu-espressif",
+        "rev": "d8cd44776339be5cdc6bd09df10065fc0ba38cc9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SFrijters",
+        "repo": "nix-qemu-espressif",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": [
+          "qemu-espressif",
+          "nixpkgs"
+        ],
+        "qemu-espressif": "qemu-espressif",
+        "rust-overlay": "rust-overlay"
+      }
+    },
+    "rust-overlay": {
+      "inputs": {
+        "nixpkgs": [
+          "qemu-espressif",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759890791,
+        "narHash": "sha256-KN1xkrQ4x6u8plgg43ZiYbQmESxeCKKOzALKjqbn4LM=",
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "rev": "74fcbc183aa6685f86008606bb7824bf2f40adbd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxalica",
+        "repo": "rust-overlay",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
