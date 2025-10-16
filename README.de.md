@@ -10,7 +10,7 @@
 ## Toolchain
 1. [Rustup.rs](https://rustup.rs/)
 2. [The Rust on ESP Book
-](https://docs.espressif.com/projects/rust/book/installation/riscv.html)
+](https://docs.espressif.com/projects/rust/book/getting-started/toolchain.html#risc-v-devices)
 3. [hakkaa-firmware](https://github.com/sirhcel/hakkaa-firmware)
 4. Espflash
     ```
