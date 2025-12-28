@@ -16,8 +16,10 @@ esp_bootloader_esp_idf::esp_app_desc!();
 
 #[main]
 fn main() -> ! {
+    // Initialize logging transport to see log output with espflash.
     esp_println::logger::init_logger_from_env();
 
+    // Configure the hardware abstraction layer we are running on.
     let config = esp_hal::Config::default().with_cpu_clock(CpuClock::max());
     let _peripherals = esp_hal::init(config);
 
