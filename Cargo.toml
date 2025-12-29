@@ -13,7 +13,6 @@ esp-bootloader-esp-idf = "0.1.0"
 esp-hal                = { version = "=1.0.0-beta.1", features = ["esp32c3", "log-04", "unstable"] }
 log                    = "0.4.27"
 
-critical-section = "1.2.0"
 embassy-time = { version = "0.4.0", features = ["log"] }
 embassy-executor = { version = "0.7.0", features = ["log", "task-arena-size-20480"] }
 esp-alloc = "0.8.0"

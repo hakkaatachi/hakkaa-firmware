@@ -817,7 +817,6 @@ name = "hakkaa"
 version = "0.1.0"
 dependencies = [
  "adjacent-pair-iterator",
- "critical-section",
  "embassy-executor 0.7.0",
  "embassy-futures",
  "embassy-sync 0.7.2",
