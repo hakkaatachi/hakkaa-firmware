@@ -6,6 +6,7 @@ version = "0.1.0"
 [[bin]]
 name = "hakkaa"
 path = "./src/bin/main.rs"
+harness = false
 
 [dependencies]
 esp-bootloader-esp-idf = "0.1.0"
@@ -43,3 +44,6 @@ incremental      = false
 lto              = 'fat'
 opt-level        = 's'
 overflow-checks  = false
+
+[dev-dependencies]
+embedded-test = { version = "0.7.0", features = ["embassy", "panic-handler"] }
