@@ -104,7 +104,7 @@ async fn eol_task(
 static SW1_SIGNAL: ButtonSignal = ButtonSignal::new();
 static U2_SIGNAL: ButtonSignal = ButtonSignal::new();
 
-#[esp_hal_embassy::main]
+#[esp_rtos::main]
 async fn main(spawner: Spawner) -> ! {
     let board = Board::init();
 

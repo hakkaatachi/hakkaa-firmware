@@ -130,7 +130,7 @@ async fn display_pattern_back_and_forth<'a>(
 
 static SHAKE_PERIOD_SIGNAL: DurationSignal = DurationSignal::new();
 
-#[esp_hal_embassy::main]
+#[esp_rtos::main]
 async fn main(spawner: Spawner) -> ! {
     // Initialize the board.
     let board = Board::init();

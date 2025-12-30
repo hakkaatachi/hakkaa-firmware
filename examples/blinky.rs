@@ -19,7 +19,7 @@ async fn delay(duration: Duration) {
     Timer::after(duration).await;
 }
 
-#[esp_hal_embassy::main]
+#[esp_rtos::main]
 async fn main(_spawner: Spawner) -> ! {
     let board = Board::init();
 
