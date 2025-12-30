@@ -7,6 +7,8 @@ use esp_hal::timer::systimer::SystemTimer;
 use crate::led::STOREY_LEDS;
 use crate::switch::LowActiveSwitch;
 
+use esp_hal::interrupt::software::SoftwareInterruptControl;
+
 /// Hakkaa board resources.
 pub struct Board<'a> {
     /// The outputs for driving the storey LEDs _D1_ to _D8_ on the main board.
@@ -35,7 +37,8 @@ impl<'a> Board<'a> {
         esp_alloc::heap_allocator!(size: 64 * 1024);
 
         let timer = SystemTimer::new(peripherals.SYSTIMER);
-        esp_hal_embassy::init(timer.alarm0);
+        let sw_int = SoftwareInterruptControl::new(peripherals.SW_INTERRUPT);
+        esp_rtos::start(timer.alarm0, sw_int.software_interrupt0);
 
         // Storey LEDs and the LED on the ESP32-C3 board are connected as follows: Current flows
         // from the power source (+) directly through the LED, a current limiting resistor, and
