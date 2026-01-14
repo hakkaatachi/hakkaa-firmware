@@ -135,7 +135,7 @@ async fn main(spawner: Spawner) -> ! {
     // Initialize the board.
     let board = Board::init();
 
-    log::info!("ハッカー the planet!");
+    log::info!("ハック the planet!");
 
     // Setup timing and storey LED abstraction. Let's start with a pretty long period for
     // cross-checking the pattern.

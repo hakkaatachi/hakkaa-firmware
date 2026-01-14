@@ -62,7 +62,7 @@ async fn main(_spawner: Spawner) -> ! {
     let image_delay = Duration::from_millis(30);
     let mut storeys = Storeys::new(board.storey_leds);
 
-    log::info!("ハッカー the planet!");
+    log::info!("ハック the planet!");
 
     // Display the pattern one row after another. We are dealing with a symmetrical pattern and
     // don't have to pay attention to the direction of movement.
