@@ -25,6 +25,15 @@
     ```
     $ cargo run --example eol-test
     ```
+* If flashing does not work due to the device repeatedly connecting and
+  disconnecting from your computer, you likely want to force the device into
+  and stay in download mode
+    1. Press and hold the button _BOOT_
+    2. Press and release the reset button _RST_
+    3. Release the button _BOOT_
+    4. Flash and run the test application as shown above
+* After flashing valid firmware for the first time, the procedure above should
+  no longer be necessary
 
 # Custom firmware for the target
 

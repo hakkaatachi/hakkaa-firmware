@@ -24,6 +24,14 @@
     ```
     $ cargo run --example eol-test
     ```
+* Falls sich das Gerät nicht flashen lässt und ständig am Rechner an- und wieder
+  abmeldet, dann kann es in den Download-Modus gezwungen werden:
+    1. Die Taste _BOOT_ drücken und halten
+    2. Die Taste _RST_ drücken und wieder loslassen
+    3. Die Taste _BOOT_ wider loslassen
+    4. Die Test-Anwendung sollte sich nun wie oben beschrieben flashen lassen
+* Nach dem ersten erfolgreichen Flashen der Firmware sollte diese Prozedur
+  nicht mehr notwendig sein
 
 # Eigene Firmware fürs Target
 
